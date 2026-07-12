@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 
 # MultiServerMCPClient iska used hme MCP server create krne k liye hota hai
 
+#=========== yaha hm dekhenge custom MCP server kaise bnata hai===============#
+
 from langchain_mcp_adapters.client import MultiServerMCPClient
 
 os.environ["SSL_CERT_FILE"] = certifi.where()

@@ -23,8 +23,12 @@ from langchain_core.messages import (
     SystemMessage,
 )
 from langchain_groq import ChatGroq
+
 # from tools.tavily_tool import tavily_search
 # from tools.flight_tool import search_flights
+
+# =========yaha hm direct MCP_Client se uska MCP Tools hm direct import krk used kr rahe hai yaha=====#
+# mcp_client_test jo bnae the usko bhi import krk used kr skte hai
 from mcp_client import tavily_mcp_search, aviation_mcp_call, extract_destination, forecast_mcp_search, weather_mcp_search
 
 
@@ -143,13 +147,13 @@ def flight_agent(state: TravelState):
 
         print("\nAIRPORTS:", airports)
         print("\nAIRLINES:", airlines)
-
+# yaha hm Prompt de rahe hai ,isme MCP ko call krne k bad wala object le lenge
         prompt = FLIGHT_AGENT_PROMPT.format(
             query=query,
-            airport_data=str(airports)[:3000],
+            airport_data=str(airports)[:3000], #itna hi data dena hai jyada information need nii hai
             airline_data=str(airlines)[:3000]
         )
-
+# yaha hm LLM call kr lenge
         response = llm.invoke([
             SystemMessage(
                 content="You are an expert travel flight planner."
@@ -175,6 +179,9 @@ def flight_agent(state: TravelState):
 
 
 
+# ========================================================#
+# yaha hme har Agents k Undar Ab MCP sever ko call krnege #
+# ========================================================#
 
 
 # =========================
@@ -183,7 +190,8 @@ def flight_agent(state: TravelState):
 
 def hotel_agent(state: TravelState):
     query = f"Best hotels for {state['user_query']}"
-    # hotel_results = tavily_search(query)
+    # hotel_results = tavily_search(query) 
+    # ye pahle wala hai normal api call wala but hm mcp call kr rahe hai niche
     hotel_results = asyncio.run(tavily_mcp_search(query))
 
     return {

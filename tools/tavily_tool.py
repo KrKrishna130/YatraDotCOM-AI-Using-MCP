@@ -1,6 +1,8 @@
 from tavily import TavilyClient
 import os
 from dotenv import load_dotenv
+# ================this is Not Required if MCP server implements so delete it==========#
+# for Internet Web Search we add Travily MCP Server
 
 load_dotenv()
 
@@ -8,7 +10,8 @@ client = TavilyClient(
     api_key= os.getenv("TAVILY_API_KEY")
 )
 
-
+# tavliy k andar Multiple tool hai but hme internet Search krni hai isliye 
+# search tool hi lagega only
 def tavily_search(query):
     response = client.search(
         query= query,

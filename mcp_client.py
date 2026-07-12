@@ -16,6 +16,8 @@ AVIATION_STACK_API_KEY = os.getenv("AVIATIONSTACK_API_KEY")
 OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
+# for MCP implementation need 4 things
+# 1.MCP Server 2.MCP client 3.Tools 4.URL & API key which will used inide tools
 
 # LLM
 llm = ChatGroq(
@@ -31,9 +33,9 @@ client = MultiServerMCPClient(
             "transport": "streamable_http",
             "url": f"https://mcp.tavily.com/mcp/?tavilyApiKey={TAVILY_API_KEY}"
         },
-# yaha aviationstack add kr rahe hai
-        "aviationstack": { # chuki Local MCP server me stdio connection rahta hai
-            "transport": "stdio",
+# yaha aviationstack add kr rahe hai ye local server hai Git hub se le rahe hai
+        "aviationstack": { # yah name=aviationstack change kr skte hai chuki Local MCP server me stdio connection rahta hai
+            "transport": "stdio", #local Mcp se comminicate k liye stdio lgta hai
             "command": "uvx",
             "args": [
                 "aviationstack-mcp"
@@ -45,9 +47,23 @@ client = MultiServerMCPClient(
 # yaha weather add kr rahe hai
          "weather": {  # chuki Local MCP server me stdio connection rahta hai
             "transport": "stdio",
-            "command": r"C:\Anaconda3\envs\travel\python.exe",
-            "args": [
-                r"D:\Bappy\Coding\Youtube\Deployments\TripMate-AI-Using-MCP\custom_weather_mcp_server.py"
+            # yaha ye wo wala path hoga jaha hamara env file me python.exe hoga
+            #  conda create -n travel python=3.11 -y
+             # conda activate travel is time ka env location dete hai
+             
+            # environment location: C:\Users\Krishna Kumar\.conda\envs\travel
+            # added / updated specs:
+            # - python=3.11
+# C:\Users\Krishna Kumar\.conda\envs\travel
+# hm local server bna rahe hai n isliye local env ka python lagega  custom_weather_mcp_server.py ko run k liye
+            # "command": r"C:\Anaconda3\envs\travel\python.exe",
+             "command": r"C:\Users\Krishna Kumar\.conda\envs\travel\python.exe",
+
+
+            "args": [ # yaha local path pura de denge
+                # E:\AI Major Project\YatraDotCOM_MultiAgent_MCP\TripMate-AI-Using-MCP-main\TripMate-AI-Using-MCP-main\custom_weather_mcp_server.py
+                # r"D:\Bappy\Coding\Youtube\Deployments\TripMate-AI-Using-MCP\custom_weather_mcp_server.py"
+                r"E:\AI Major Project\YatraDotCOM_MultiAgent_MCP\TripMate-AI-Using-MCP-main\TripMate-AI-Using-MCP-main\custom_weather_mcp_server.py"
             ],
             "env": {
                 "OPENWEATHER_API_KEY": OPENWEATHER_API_KEY
@@ -115,7 +131,7 @@ async def initialize_mcp():
 
 
 
-
+# yaha Hm search_tool hi lete hai for real time Internet Search 
 async def tavily_mcp_search(query: str):
     await initialize_mcp()
     result = await search_tool.ainvoke(
