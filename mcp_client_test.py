@@ -15,7 +15,7 @@ load_dotenv()
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
 
 
-client = MultiServerMCPClient(
+client = MultiServerMCPClient( #yaha hme all mcp server ko list me {} me add krna hota hai
     {
        "tavily": {
             "transport": "streamable_http",

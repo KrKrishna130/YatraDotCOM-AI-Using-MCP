@@ -25,12 +25,13 @@ llm = ChatGroq(
 
 
 client = MultiServerMCPClient(
-    {
+    {  # yaha hme har MCP server ko list me {} me add krna hota hai
+        # yaha Travily add kr rahe hai
         "tavily": {
             "transport": "streamable_http",
             "url": f"https://mcp.tavily.com/mcp/?tavilyApiKey={TAVILY_API_KEY}"
         },
-
+# yaha aviationstack add kr rahe hai
         "aviationstack": {
             "transport": "stdio",
             "command": "uvx",
@@ -41,7 +42,7 @@ client = MultiServerMCPClient(
                 "AVIATION_STACK_API_KEY": AVIATION_STACK_API_KEY
             }
         },
-
+# yaha weather add kr rahe hai
          "weather": {
             "transport": "stdio",
             "command": r"C:\Anaconda3\envs\travel\python.exe",
